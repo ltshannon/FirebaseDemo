@@ -17,6 +17,8 @@ class Authentication: ObservableObject {
     static let shared = Authentication()
     private var handler: AuthStateDidChangeListenerHandle? = nil
     @Published var state: AuthState = .waiting
+    @Published var fcmToken: String = ""
+    @Published var email: String = ""
  
     enum AuthState {
         case waiting
@@ -55,9 +57,19 @@ class Authentication: ObservableObject {
                 
             case .loggedIn:
                 self.authenticateUser(email)
+                self.email = email
                 
             case .loggedOut:
                 break
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: Notification.Name("FCMToken"), object: nil, queue: nil) { notification in
+            let newToken = notification.userInfo?["token"] as? String ?? ""
+            Task {
+                await MainActor.run {
+                    self.fcmToken = newToken
+                }
             }
         }
         

@@ -32,17 +32,40 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        debugPrint("🧨", "willPresent")
         process(notification)
         completionHandler([[.banner, .sound]])
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        debugPrint("🧨", "didReceive ")
         process(response.notification)
         completionHandler()
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async -> UIBackgroundFetchResult {
+        
+        debugPrint("🧨", "didReceiveRemoteNotification userInfo: \(userInfo)")
+        
+        if let title = userInfo["title"] as? String, let body = userInfo["body"] as? String {
+            let dataDict: [String: String] = ["key1": title, "key2" : body]
+            NotificationCenter.default.post(
+                name: Notification.Name("set badge"),
+                object: nil,
+                userInfo: dataDict
+            )
+        }
+        
+        return UIBackgroundFetchResult.newData
+        
+    }
+    
+    func application(application: UIApplication,  didReceiveRemoteNotification userInfo: [NSObject : AnyObject],  fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        debugPrint("🧨", "didReceiveRemoteNotification ")
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
@@ -72,12 +95,14 @@ struct FirebaseDemoApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userAuth = Authentication.shared
     @StateObject var authenticationService = AuthenticationService.shared
+    @StateObject var firebaseService = FirebaseService.shared
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(authenticationService)
                 .environmentObject(userAuth)
+                .environmentObject(firebaseService)
         }
     }
 }

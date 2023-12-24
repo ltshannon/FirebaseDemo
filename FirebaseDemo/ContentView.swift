@@ -10,13 +10,20 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var authticationService: AuthenticationService
     @EnvironmentObject var userAuth: Authentication
+    @EnvironmentObject var firebaseService: FirebaseService
     @State private var showSignIn: Bool = false
     @State private var showSettings = false
     
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Hello, world!")
+                NavigationLink {
+                    NotificationListView()
+                } label: {
+                    Text("Send notification to this device")
+                        .DefaultTextButtonStyle()
+                }
+                Text("You are logged on as : \(userAuth.email)")
             }
             .padding()
             .onAppear {
@@ -43,6 +50,13 @@ struct ContentView: View {
             }
             .fullScreenCover(isPresented: $showSignIn) {
                 SignInView()
+            }
+            .onReceive(userAuth.$fcmToken) { token in
+                if token.isNotEmpty {
+                    Task {
+                        await firebaseService.updateUsersDocumentWithFCM(token: userAuth.fcmToken)
+                    }
+                }
             }
         }
     }

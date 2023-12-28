@@ -22,6 +22,8 @@
 		B11CE54B2AFC592C008B3BF4 /* GoogleSignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11CE54A2AFC592C008B3BF4 /* GoogleSignInService.swift */; };
 		B11CE54D2AFC5A60008B3BF4 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11CE54C2AFC5A60008B3BF4 /* Utilities.swift */; };
 		B11CE5502AFD81AD008B3BF4 /* AppleSignInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11CE54F2AFD81AD008B3BF4 /* AppleSignInService.swift */; };
+		B11E86E32B3A708B0004EBD1 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11E86E22B3A708B0004EBD1 /* NetworkService.swift */; };
+		B11E86E52B3BACEA0004EBD1 /* APITestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11E86E42B3BACEA0004EBD1 /* APITestView.swift */; };
 		B15AD1DC2B2EACE900F0CA66 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B15AD1DB2B2EACE900F0CA66 /* FirebaseAnalytics */; };
 		B15AD1DE2B2EACE900F0CA66 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = B15AD1DD2B2EACE900F0CA66 /* FirebaseAnalyticsOnDeviceConversion */; };
 		B15AD1E02B2EACE900F0CA66 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B15AD1DF2B2EACE900F0CA66 /* FirebaseAnalyticsSwift */; };
@@ -75,6 +77,8 @@
 		B11CE54C2AFC5A60008B3BF4 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		B11CE54E2AFD7EE4008B3BF4 /* FirebaseDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FirebaseDemo.entitlements; sourceTree = "<group>"; };
 		B11CE54F2AFD81AD008B3BF4 /* AppleSignInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInService.swift; sourceTree = "<group>"; };
+		B11E86E22B3A708B0004EBD1 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		B11E86E42B3BACEA0004EBD1 /* APITestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITestView.swift; sourceTree = "<group>"; };
 		B15AD2112B2EAD2100F0CA66 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B15AD2142B2FB12800F0CA66 /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		B15AD2162B2FB14A00F0CA66 /* NewsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsItem.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				B11CE5392AFB079C008B3BF4 /* SignInView.swift */,
 				B11CE53B2AFB29ED008B3BF4 /* SettingsView.swift */,
 				B15AD21E2B30F89900F0CA66 /* NotificationListView.swift */,
+				B11E86E42B3BACEA0004EBD1 /* APITestView.swift */,
 				B11CE4F12AFAE87F008B3BF4 /* Assets.xcassets */,
 				B15AD2112B2EAD2100F0CA66 /* GoogleService-Info.plist */,
 				B11CE4F32AFAE87F008B3BF4 /* Preview Content */,
@@ -176,6 +181,7 @@
 				B11CE54A2AFC592C008B3BF4 /* GoogleSignInService.swift */,
 				B11CE54F2AFD81AD008B3BF4 /* AppleSignInService.swift */,
 				B15AD21A2B30DB8200F0CA66 /* FirebaseService.swift */,
+				B11E86E22B3A708B0004EBD1 /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -313,11 +319,13 @@
 				B11CE4F02AFAE87E008B3BF4 /* ContentView.swift in Sources */,
 				B15AD21F2B30F89900F0CA66 /* NotificationListView.swift in Sources */,
 				B15AD2172B2FB14A00F0CA66 /* NewsItem.swift in Sources */,
+				B11E86E32B3A708B0004EBD1 /* NetworkService.swift in Sources */,
 				B15AD21B2B30DB8200F0CA66 /* FirebaseService.swift in Sources */,
 				B11CE4EE2AFAE87E008B3BF4 /* FirebaseDemoApp.swift in Sources */,
 				B11CE5352AFAF2AD008B3BF4 /* Authentication.swift in Sources */,
 				B11CE5412AFB3577008B3BF4 /* ViewModifiers.swift in Sources */,
 				B11CE53C2AFB29ED008B3BF4 /* SettingsView.swift in Sources */,
+				B11E86E52B3BACEA0004EBD1 /* APITestView.swift in Sources */,
 				B11CE54B2AFC592C008B3BF4 /* GoogleSignInService.swift in Sources */,
 				B15AD21D2B30DDF600F0CA66 /* String+Utilities.swift in Sources */,
 				B11CE53F2AFB3448008B3BF4 /* ButtonStyles.swift in Sources */,

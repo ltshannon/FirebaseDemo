@@ -19,10 +19,21 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         Messaging.messaging().delegate = self
 
         UNUserNotificationCenter.current().delegate = self
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(
-          options: authOptions) { _, _ in }
-        application.registerForRemoteNotifications()
+//        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+//        UNUserNotificationCenter.current().requestAuthorization(
+//          options: authOptions) { _, _ in }
+//            DispatchQueue.main.async {
+//                application.registerForRemoteNotifications()
+//            }
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
+            if granted {
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            }
+        }
         
         return true
     }
@@ -54,7 +65,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         if let title = userInfo["title"] as? String, let body = userInfo["body"] as? String {
             let dataDict: [String: String] = ["key1": title, "key2" : body]
             NotificationCenter.default.post(
-                name: Notification.Name("set badge"),
+                name: Notification.Name("silent"),
                 object: nil,
                 userInfo: dataDict
             )
@@ -96,6 +107,7 @@ struct FirebaseDemoApp: App {
     @StateObject var userAuth = Authentication.shared
     @StateObject var authenticationService = AuthenticationService.shared
     @StateObject var firebaseService = FirebaseService.shared
+    @StateObject var networkService = NetworkService.shared
     
     var body: some Scene {
         WindowGroup {
@@ -103,6 +115,7 @@ struct FirebaseDemoApp: App {
                 .environmentObject(authenticationService)
                 .environmentObject(userAuth)
                 .environmentObject(firebaseService)
+                .environmentObject(networkService)
         }
     }
 }

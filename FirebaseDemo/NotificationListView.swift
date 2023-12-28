@@ -9,10 +9,11 @@ import SwiftUI
 
 struct NotificationListView: View {
     @EnvironmentObject var firebaseService: FirebaseService
+    @EnvironmentObject var userAuth: Authentication
     @State var title: String = ""
     @State var bodyText: String = ""
-    @State var silent: Bool = true
     @State var silentToggle: Bool = false
+    @State var showingAlert = false
     
     var body: some View {
         NavigationStack {
@@ -26,7 +27,7 @@ struct NotificationListView: View {
                 ScrollView {
                     ForEach (firebaseService.users) { user in
                         Button {
-                            firebaseService.callFirebaseCallableFunction(fcm: user.fcm, title: title, body: bodyText, silent: silent)
+                            firebaseService.callFirebaseCallableFunction(fcm: user.fcm, title: title, body: bodyText, silent: silentToggle)
                         } label: {
                             HStack {
                                 Text(user.email)
@@ -39,6 +40,15 @@ struct NotificationListView: View {
                 }
             }
             .padding([.leading, .trailing], 20)
+            .onReceive(userAuth.$silent) { silent in
+                if silent {
+                    showingAlert = true
+                    userAuth.silent = false
+                }
+            }
+            .alert(isPresented: $showingAlert) {
+                Alert(title: Text(userAuth.key1), message: Text(userAuth.key2), dismissButton: .default(Text("OK")))
+            }
         }
         .navigationTitle(Text("Send Notification"))
     }

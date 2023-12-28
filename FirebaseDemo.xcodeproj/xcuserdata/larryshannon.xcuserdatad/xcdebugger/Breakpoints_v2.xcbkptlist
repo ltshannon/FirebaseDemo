@@ -67,53 +67,5 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2B9E57AB-834F-4309-B9B0-B3C6B9A06707"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FirebaseDemo/FirebaseDemoApp.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "application(_:didReceiveRemoteNotification:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "2B9E57AB-834F-4309-B9B0-B3C6B9A06707 - 838f9c5fddc46d09"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for FirebaseDemo.AppDelegate.application(_: __C.UIApplication, didReceiveRemoteNotification: Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;) async -&gt; __C.UIBackgroundFetchResult"
-                  moduleName = "FirebaseDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/larryshannon/Desktop/FirebaseDemo/FirebaseDemo/FirebaseDemoApp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "56"
-                  endingLineNumber = "56"
-                  offsetFromSymbolStart = "1744">
-               </Location>
-               <Location
-                  uuid = "2B9E57AB-834F-4309-B9B0-B3C6B9A06707 - 838f9c5fddc46d09"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for FirebaseDemo.AppDelegate.application(_: __C.UIApplication, didReceiveRemoteNotification: Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;) async -&gt; __C.UIBackgroundFetchResult"
-                  moduleName = "FirebaseDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/larryshannon/Desktop/FirebaseDemo/FirebaseDemo/FirebaseDemoApp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "56"
-                  endingLineNumber = "56"
-                  offsetFromSymbolStart = "1692">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

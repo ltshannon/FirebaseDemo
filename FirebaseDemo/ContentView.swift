@@ -23,6 +23,12 @@ struct ContentView: View {
                     Text("Send notification to this device")
                         .DefaultTextButtonStyle()
                 }
+                NavigationLink {
+                    APITestView()
+                } label: {
+                    Text("Test API")
+                        .DefaultTextButtonStyle()
+                }
                 Text("You are logged on as : \(userAuth.email)")
             }
             .padding()

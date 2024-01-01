@@ -8,95 +8,30 @@ import Foundation
 import Firebase
 
 enum Endpoint {
-    case createUser
-    case createGroup
-    case addUserToPod(groupId: String)
-    case removeUserFromPod(groupId: String)
-    case acceptInvite(groupId: String)
-    case declineInvite(groupId: String)
-    case leavePod(groupId: String)
-    case postStatus(groupId: String)
-    case postQuestionAnswers
-    case postGroupAnswers
-    case checkPhoneNumbers
-    case inviteUser
-    case deleteGroup(groupId: String)
-    case location
-    case riskScore
-    case leaveGroup(groupId: String)
-    case removeUser(groupId: String)
-    case addFCMToken
+    case testWrite
+    case testRead
     
     var baseUrlString: String {
         //TODO: move this into its own ENUM at some point in order to switch between staging/dev/prod server environments
-        return "https://us-central1-together-c537f.cloudfunctions.net/api/"
+        return "https://us-central1-fir-demo-adeb5.cloudfunctions.net/"
     }
     
     var method: HTTPMethod {
         switch self {
         
-        case .createUser,
-             .createGroup,
-             .addUserToPod,
-             .removeUserFromPod,
-             .acceptInvite,
-             .declineInvite,
-             .leavePod,
-             .postStatus,
-             .postQuestionAnswers,
-             .postGroupAnswers,
-             .checkPhoneNumbers,
-             .inviteUser,
-             .location,
-             .riskScore,
-             .leaveGroup,
-             .removeUser,
-             .addFCMToken:
+        case .testWrite,
+             .testRead:
             return .post
-        case .deleteGroup:
-            return .delete
         }
     }
     
     var route: String {
         switch self {
             
-        case .createUser:
-            return "users/create"
-        case .createGroup:
-            return "groups/create"
-        case .addUserToPod(groupId: let groupId):
-            return "groups/\(groupId)/inviteUser"
-        case .removeUserFromPod(groupId: let groupId):
-            return "groups/\(groupId)/removeUser"
-        case .acceptInvite(groupId: let groupId):
-            return "groups/\(groupId)/accept"
-        case .declineInvite(groupId: let groupId):
-            return "groups/\(groupId)/decline"
-        case .leavePod(groupId: let groupId):
-            return "groups/\(groupId)/leave"
-        case .postStatus(groupId: let groupId):
-            return "groups/\(groupId)/status"
-        case .postQuestionAnswers:
-            return "answers"
-        case .postGroupAnswers:
-            return "answerQuestions"
-        case .checkPhoneNumbers:
-            return "checkPhoneNumbers"
-        case .inviteUser:
-            return "invites/create"
-        case .deleteGroup(groupId: let groupId):
-            return "groups/\(groupId)"
-        case .location:
-            return "users/location"
-        case .riskScore:
-            return "users/riskScore"
-        case .leaveGroup(groupId: let groupId):
-            return "groups/\(groupId)/leave"
-        case .removeUser(groupId: let groupId):
-            return "groups/\(groupId)/removeUser"
-        case .addFCMToken:
-            return "users/addFCMToken"
+        case .testWrite:
+            return "testWrite"
+        case .testRead:
+            return "testRead"
         }
     }
 }
@@ -119,14 +54,20 @@ struct Result: Codable {
 
 class NetworkService: ObservableObject {
     static let shared = NetworkService()
+    @Published var message: String = ""
     var authentication = Authentication.shared
     
+    func resetMessage() {
+        message = ""
+    }
+    
     func callAPI(endpoint: Endpoint, requestBody: Data?) async {
-        guard let url = URL(string: "https://us-central1-fir-demo-adeb5.cloudfunctions.net/testFunction") else {
-            print("Invalid URL")
+        
+        guard let url = URL(string: endpoint.baseUrlString + endpoint.route) else {
+            debugPrint("🧨", "Invalid URL")
             return
         }
-        
+
         let fcm = await authentication.fcmToken
         
         var request = URLRequest(url: url)
@@ -145,11 +86,18 @@ class NetworkService: ObservableObject {
                         debugPrint("🧨", "response.statusCode: \(response.statusCode)", "Error: \(message)")
                     } else {
                         debugPrint("🌎", "response: \(message)")
+                        if endpoint == .testRead {
+                            DispatchQueue.main.async {
+                                self.message = message
+                            }
+                        }
                     }
                 }
+            } else {
+                debugPrint("🧨", "JSON decode failed")
             }
         } catch {
-            print("Invalid data")
+            debugPrint("🧨", "Invalid data")
         }
     }
     

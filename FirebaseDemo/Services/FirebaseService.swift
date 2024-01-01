@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 import FirebaseFunctions
+import FirebaseFirestoreSwift
 
 let database = Firestore.firestore()
 
@@ -17,6 +18,15 @@ struct UserInformation: Codable, Identifiable {
     var name: String
     var email: String
     var fcm: String
+}
+
+struct TestData: Codable, Identifiable {
+    @DocumentID var id: String?
+    var name:String
+    var address: String
+    var city: String
+    var state: String
+    var zipcode: String
 }
 
 class FirebaseService: ObservableObject {
@@ -35,10 +45,15 @@ class FirebaseService: ObservableObject {
                         "name" : name ?? "",
                      ]
         do {
-            try await database.collection("users").document(currentUid).setData(values)
+            try await database.collection("users").document(currentUid).updateData(values)
             await getUsers()
         } catch {
             debugPrint(String.boom, "updateUsersDocumentWithFCM: \(error)")
+            do {
+                try await database.collection("users").document(currentUid).setData(values)
+            } catch {
+                debugPrint(String.boom, "setUsersDocumentWithFCM: \(error)")
+            }
         }
         
     }
@@ -88,4 +103,32 @@ class FirebaseService: ObservableObject {
         }
     }
     
+    func writeTestData() {
+        let testData = TestData(name: "Joe Cool",
+                                address: "1 Pine St",
+                                city: "Boulder",
+                                state: "CO",
+                                zipcode: "82121")
+        
+        do {
+            try database.document("testData/document1").setData(from: testData)
+        } catch {
+            debugPrint("🧨", "writeTestData failed: \(error.localizedDescription)")
+        }
+    }
+    
+    func updateTestData() {
+        database.document("testData/document1").updateData(["name": "Fred Smith"])
+    }
+    
+    func readTestData() async -> TestData? {
+        do {
+            let testData = try await database.document("testData/document1").getDocument(as: TestData.self)
+            return testData
+        } catch {
+            debugPrint("🧨", "readTestData failed: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
 }

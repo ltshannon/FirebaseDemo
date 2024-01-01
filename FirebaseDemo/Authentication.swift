@@ -16,6 +16,7 @@ import UserNotifications
 class Authentication: ObservableObject {
     static let shared = Authentication()
     private var handler: AuthStateDidChangeListenerHandle? = nil
+    @Published var user: User?
     @Published var state: AuthState = .waiting
     @Published var fcmToken: String = ""
     @Published var email: String = ""
@@ -34,6 +35,8 @@ class Authentication: ObservableObject {
        
         handler = Auth.auth().addStateDidChangeListener { auth, user in
             debugPrint("🛎️", "Firebase auth state changed, logged in: \(auth.userIsLoggedIn)")
+            
+            self.user = user
             
             //case where user loggedin but waiting account setup
             guard self.state != .accountSetup else {

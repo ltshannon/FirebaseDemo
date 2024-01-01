@@ -26,7 +26,13 @@ struct ContentView: View {
                 NavigationLink {
                     APITestView()
                 } label: {
-                    Text("Test API")
+                    Text("Test firebase http API calls")
+                        .DefaultTextButtonStyle()
+                }
+                NavigationLink {
+                    DemoFireStoreView()
+                } label: {
+                    Text("Demo FireStore")
                         .DefaultTextButtonStyle()
                 }
                 Text("You are logged on as : \(userAuth.email)")

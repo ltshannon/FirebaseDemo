@@ -58,6 +58,7 @@
 		B15AD21B2B30DB8200F0CA66 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15AD21A2B30DB8200F0CA66 /* FirebaseService.swift */; };
 		B15AD21D2B30DDF600F0CA66 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15AD21C2B30DDF600F0CA66 /* String+Utilities.swift */; };
 		B15AD21F2B30F89900F0CA66 /* NotificationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15AD21E2B30F89900F0CA66 /* NotificationListView.swift */; };
+		B1AF60CE2B41143F007B0EEB /* DemoFireStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AF60CD2B41143F007B0EEB /* DemoFireStoreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		B15AD21A2B30DB8200F0CA66 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		B15AD21C2B30DDF600F0CA66 /* String+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		B15AD21E2B30F89900F0CA66 /* NotificationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
+		B1AF60CD2B41143F007B0EEB /* DemoFireStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoFireStoreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				B11CE53B2AFB29ED008B3BF4 /* SettingsView.swift */,
 				B15AD21E2B30F89900F0CA66 /* NotificationListView.swift */,
 				B11E86E42B3BACEA0004EBD1 /* APITestView.swift */,
+				B1AF60CD2B41143F007B0EEB /* DemoFireStoreView.swift */,
 				B11CE4F12AFAE87F008B3BF4 /* Assets.xcassets */,
 				B15AD2112B2EAD2100F0CA66 /* GoogleService-Info.plist */,
 				B11CE4F32AFAE87F008B3BF4 /* Preview Content */,
@@ -317,6 +320,7 @@
 				B15AD2152B2FB12800F0CA66 /* NewsModel.swift in Sources */,
 				B11CE5502AFD81AD008B3BF4 /* AppleSignInService.swift in Sources */,
 				B11CE4F02AFAE87E008B3BF4 /* ContentView.swift in Sources */,
+				B1AF60CE2B41143F007B0EEB /* DemoFireStoreView.swift in Sources */,
 				B15AD21F2B30F89900F0CA66 /* NotificationListView.swift in Sources */,
 				B15AD2172B2FB14A00F0CA66 /* NewsItem.swift in Sources */,
 				B11E86E32B3A708B0004EBD1 /* NetworkService.swift in Sources */,

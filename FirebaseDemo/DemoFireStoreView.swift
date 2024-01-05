@@ -10,30 +10,28 @@ import SwiftUI
 struct DemoFireStoreView: View {
     @EnvironmentObject var firebaseService: FirebaseService
     var body: some View {
-        VStack {
-            Button {
-                Task {
-                    firebaseService.writeTestData()
-                }
-            } label: {
-                Text("Write to firestore")
-                    .DefaultTextButtonStyle()
-            }
-            Button {
-                Task {
-                    if let data = await firebaseService.readTestData() {
-                        debugPrint("", "testData: \(data)")
+        NavigationStack {
+            VStack {
+                Button {
+                    Task {
+                        firebaseService.writeTestData()
                     }
+                } label: {
+                    Text("Write to firestore")
+                        .DefaultTextButtonStyle()
                 }
-            } label: {
-                Text("Read from firestore")
-                    .DefaultTextButtonStyle()
-            }
-            Button {
-                firebaseService.updateTestData()
-            } label: {
-                Text("Update field in firestore")
-                    .DefaultTextButtonStyle()
+                NavigationLink {
+                    ReadTestDataView()
+                } label: {
+                    Text("Read Test Data from firestore")
+                        .DefaultTextButtonStyle()
+                }
+                Button {
+                    firebaseService.updateTestData()
+                } label: {
+                    Text("Update field in firestore")
+                        .DefaultTextButtonStyle()
+                }
             }
         }
         .padding()

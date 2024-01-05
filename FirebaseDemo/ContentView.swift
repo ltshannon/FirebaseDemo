@@ -35,17 +35,31 @@ struct ContentView: View {
                     Text("Demo FireStore")
                         .DefaultTextButtonStyle()
                 }
-                Text("You are logged on as : \(userAuth.email)")
+                if userAuth.isGuestUser {
+                    Text("You are logged in under a Anonymous account")
+                } else {
+                    Text("You are logged on as : \(userAuth.email)")
+                    Text("Under a \(authticationService.loginType.rawValue) account")
+                }
             }
             .padding()
             .onAppear {
+                debugPrint("😍", "ContentView onAppear userAtuh.state: \(userAuth.state.rawValue)")
                 if userAuth.state == .loggedOut {
                     showSignIn = true
                 }
             }
             .onChange(of: userAuth.state) { oldValue, newValue in
+                debugPrint("😍", "ContentView onChange userAuth.state: oldValue \(oldValue) newValue: \(newValue)")
                 if newValue == .loggedOut {
-                    showSignIn = true
+                    DispatchQueue.main.async {
+                        showSignIn = true
+                    }
+                }
+                if newValue == .loggedIn {
+                    DispatchQueue.main.async {
+                        showSignIn = false
+                    }
                 }
             }
             .toolbar {
@@ -66,7 +80,7 @@ struct ContentView: View {
             .onReceive(userAuth.$fcmToken) { token in
                 if token.isNotEmpty {
                     Task {
-                        await firebaseService.updateUsersDocumentWithFCM(token: userAuth.fcmToken)
+                        await firebaseService.updateAddUsersDocument(token: userAuth.fcmToken)
                     }
                 }
             }

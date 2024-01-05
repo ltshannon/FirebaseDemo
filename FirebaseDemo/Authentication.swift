@@ -19,24 +19,34 @@ class Authentication: ObservableObject {
     @Published var user: User?
     @Published var state: AuthState = .waiting
     @Published var fcmToken: String = ""
+    @Published var firebaseUserId = ""
     @Published var email: String = ""
     @Published var silent: Bool = false
     @Published var key1: String = ""
     @Published var key2: String = ""
+    @Published var isGuestUser = false
+    var firebaseService = FirebaseService.shared
  
-    enum AuthState {
-        case waiting
-        case accountSetup
-        case loggedIn
-        case loggedOut
+    enum AuthState: String {
+        case waiting = "waiting"
+        case accountSetup = "accountSetup"
+        case loggedIn = "loggedIn"
+        case loggedOut = "loggedOut"
     }
     
     init() {
        
         handler = Auth.auth().addStateDidChangeListener { auth, user in
-            debugPrint("🛎️", "Firebase auth state changed, logged in: \(auth.userIsLoggedIn)")
+            debugPrint("🛎️", "Authentication Firebase auth state changed, logged in: \(auth.userIsLoggedIn)")
             
             self.user = user
+            
+            DispatchQueue.main.async {
+                self.isGuestUser = false
+                if let isAnonymous = user?.isAnonymous {
+                    self.isGuestUser = isAnonymous
+                }
+            }
             
             //case where user loggedin but waiting account setup
             guard self.state != .accountSetup else {
@@ -49,10 +59,9 @@ class Authentication: ObservableObject {
                 return
             }
             
-            //bad state, force user to log in again
-            guard let email = currentUser.email else {
-                self.state = .loggedOut
-                return
+            var email = ""
+            if let temp = currentUser.email {
+                email = temp
             }
             
             self.state = auth.userIsLoggedIn ? .loggedIn : .loggedOut
@@ -62,8 +71,14 @@ class Authentication: ObservableObject {
                 break
                 
             case .loggedIn:
-                self.authenticateUser(email)
-                self.email = email
+                DispatchQueue.main.async {
+                    self.firebaseUserId = user?.uid ?? ""
+                    self.authenticateUser(email)
+                    self.email = email
+                }
+                Task {
+                    await self.firebaseService.updateAddUsersDocument(token: self.fcmToken.isNotEmpty ? self.fcmToken : nil)
+                }
                 
             case .loggedOut:
                 break

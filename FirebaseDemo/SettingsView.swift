@@ -15,54 +15,77 @@ struct SettingsView: View {
     @State private var showResetPassowrd = false
     
     var body: some View {
-        VStack {
-            Button {
-                do {
-                    try authticationService.signOut()
-                    presentationMode.wrappedValue.dismiss()
-                } catch {
-                    debugPrint("🧨", "Firebase signout failed")
-                    firebaseError = error.localizedDescription
+        NavigationStack {
+            VStack {
+                NavigationLink {
+                    UserProfileView()
+                } label: {
+                    Text("User Profile")
+                        .DefaultTextButtonStyle()
                 }
-            } label: {
-                Text("Sign out")
-                    .DefaultTextButtonStyle()
-            }
-            Button {
-                Task {
+                Button {
                     do {
-                        try await authticationService.resetPassword()
-                        showResetPassowrd = true
+                        try authticationService.signOut()
+                        presentationMode.wrappedValue.dismiss()
                     } catch {
-                        debugPrint("🧨", "Firebase reset password failed")
+                        debugPrint("🧨", "Firebase signout failed")
                         firebaseError = error.localizedDescription
                     }
+                } label: {
+                    Text("Sign out")
+                        .DefaultTextButtonStyle()
                 }
-            } label: {
-                Text("Reset password")
-                    .DefaultTextButtonStyle()
+                Button {
+                    Task {
+                        do {
+                            try await authticationService.resetPassword()
+                            DispatchQueue.main.async {
+                                showResetPassowrd = true
+                            }
+                        } catch {
+                            debugPrint("🧨", "Firebase reset password failed")
+                            DispatchQueue.main.async {
+                                firebaseError = error.localizedDescription
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Reset password")
+                        .DefaultTextButtonStyle()
+                }
+                Button {
+                    Task {
+                        await authticationService.deleteAccount()
+                    }
+                    DispatchQueue.main.async {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                } label: {
+                    Text("Delete User Account")
+                        .DefaultTextButtonStyle()
+                }
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("Cancel")
+                        .DefaultTextButtonStyle()
+                }
             }
-            Button {
-                presentationMode.wrappedValue.dismiss()
-            } label: {
-                Text("Cancel")
-                    .DefaultTextButtonStyle()
+            .padding()
+            .alert("Email or password invalid", isPresented: $showFirebaseError) {
+                Button("Ok", role: .cancel) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            } message: {
+                Text("Firebase failed, error: \(firebaseError)")
             }
-        }
-        .padding()
-        .alert("Email or password invalid", isPresented: $showFirebaseError) {
-            Button("Ok", role: .cancel) { 
-                presentationMode.wrappedValue.dismiss()
+            .alert("Reset Passowrd", isPresented: $showResetPassowrd) {
+                Button("Ok", role: .cancel) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            } message: {
+                Text("Check your email for a reset password")
             }
-        } message: {
-            Text("Firebase failed, error: \(firebaseError)")
-        }
-        .alert("Reset Passowrd", isPresented: $showResetPassowrd) {
-            Button("Ok", role: .cancel) {
-                presentationMode.wrappedValue.dismiss()
-            }
-        } message: {
-            Text("Check your email for a reset password")
         }
     }
 }

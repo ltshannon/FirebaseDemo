@@ -48,7 +48,7 @@ public enum HTTPMethod: String {
     case trace   = "TRACE"
 }
 
-struct Result: Codable {
+struct APIResult: Codable {
     let message: String
 }
 
@@ -79,7 +79,7 @@ class NetworkService: ObservableObject {
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             
-            if let decodedResponse = try? JSONDecoder().decode(Result.self, from: data) {
+            if let decodedResponse = try? JSONDecoder().decode(APIResult.self, from: data) {
                 let message = decodedResponse.message
                 if let response = response as? HTTPURLResponse {
                     if response.statusCode != 200 {

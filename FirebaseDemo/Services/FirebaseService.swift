@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Firebase
 import FirebaseFirestore
 import FirebaseFunctions
@@ -18,6 +19,7 @@ struct UserInformation: Codable, Identifiable {
     var name: String
     var email: String
     var fcm: String
+    var profileImage: String?
 }
 
 struct TestData: Codable, Identifiable {
@@ -33,6 +35,20 @@ class FirebaseService: ObservableObject {
     static let shared = FirebaseService()
     @Published var users: [UserInformation] = []
     private var userListener: ListenerRegistration?
+    @AppStorage("profile-url") var profileURL: String = ""
+    
+    func updateAddUserProfileImage(url: String) async {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        let value = [
+                        "profileImage" : url
+                    ]
+        do {
+            try await database.collection("users").document(currentUid).updateData(value)
+        } catch {
+            debugPrint(String.boom, "updateAddUserProfileImage: \(error)")
+        }
+    }
     
     func updateAddUsersDocument(token: String?) async {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
@@ -42,7 +58,8 @@ class FirebaseService: ObservableObject {
         var values = [
                         "email" : currentEmail ?? "unknown",
                         "name" : name ?? "unknown",
-                        "userId" : currentUid
+                        "userId" : currentUid,
+                        "profileImage" : profileURL
                      ]
         if token != nil {
             values["fcm"] = token
@@ -82,7 +99,9 @@ class FirebaseService: ObservableObject {
                     debugPrint("🧨", "\(error.localizedDescription)")
                 }
             }
-            self.users = items
+            DispatchQueue.main.async {
+                self.users = items
+            }
 
         }
         userListener = listener

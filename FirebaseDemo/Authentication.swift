@@ -73,7 +73,6 @@ class Authentication: ObservableObject {
             case .loggedIn:
                 DispatchQueue.main.async {
                     self.firebaseUserId = user?.uid ?? ""
-                    self.authenticateUser(email)
                     self.email = email
                 }
                 Task {
@@ -107,11 +106,7 @@ class Authentication: ObservableObject {
         }
         
     }
-    
-    func authenticateUser(_ email: String) {
-        
-    }
-    
+
     deinit {
         if let handler {
             Auth.auth().removeStateDidChangeListener(handler)

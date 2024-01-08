@@ -64,6 +64,7 @@
 		B165F9572B4A326E0060636F /* NukeExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = B165F9562B4A326E0060636F /* NukeExtensions */; };
 		B165F9592B4A326E0060636F /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = B165F9582B4A326E0060636F /* NukeUI */; };
 		B165F95B2B4A326E0060636F /* NukeVideo in Frameworks */ = {isa = PBXBuildFile; productRef = B165F95A2B4A326E0060636F /* NukeVideo */; };
+		B165F95D2B4C80670060636F /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165F95C2B4C80670060636F /* UserView.swift */; };
 		B1AF60CE2B41143F007B0EEB /* DemoFireStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AF60CD2B41143F007B0EEB /* DemoFireStoreView.swift */; };
 		B1AF60D02B44D349007B0EEB /* ReadTestDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AF60CF2B44D349007B0EEB /* ReadTestDataView.swift */; };
 /* End PBXBuildFile section */
@@ -96,6 +97,7 @@
 		B15AD21E2B30F89900F0CA66 /* NotificationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
 		B165F94F2B48AA720060636F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		B165F9512B4901440060636F /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		B165F95C2B4C80670060636F /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		B1AF60CD2B41143F007B0EEB /* DemoFireStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoFireStoreView.swift; sourceTree = "<group>"; };
 		B1AF60CF2B44D349007B0EEB /* ReadTestDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadTestDataView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -178,6 +180,7 @@
 				B1AF60CD2B41143F007B0EEB /* DemoFireStoreView.swift */,
 				B1AF60CF2B44D349007B0EEB /* ReadTestDataView.swift */,
 				B165F94F2B48AA720060636F /* UserProfileView.swift */,
+				B165F95C2B4C80670060636F /* UserView.swift */,
 				B11CE4F12AFAE87F008B3BF4 /* Assets.xcassets */,
 				B15AD2112B2EAD2100F0CA66 /* GoogleService-Info.plist */,
 				B11CE4F32AFAE87F008B3BF4 /* Preview Content */,
@@ -343,6 +346,7 @@
 				B11CE5502AFD81AD008B3BF4 /* AppleSignInService.swift in Sources */,
 				B11CE4F02AFAE87E008B3BF4 /* ContentView.swift in Sources */,
 				B1AF60CE2B41143F007B0EEB /* DemoFireStoreView.swift in Sources */,
+				B165F95D2B4C80670060636F /* UserView.swift in Sources */,
 				B15AD21F2B30F89900F0CA66 /* NotificationListView.swift in Sources */,
 				B15AD2172B2FB14A00F0CA66 /* NewsItem.swift in Sources */,
 				B11E86E32B3A708B0004EBD1 /* NetworkService.swift in Sources */,

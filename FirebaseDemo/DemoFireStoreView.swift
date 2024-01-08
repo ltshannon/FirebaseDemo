@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DemoFireStoreView: View {
     @EnvironmentObject var firebaseService: FirebaseService
+    
     var body: some View {
         NavigationStack {
             VStack {

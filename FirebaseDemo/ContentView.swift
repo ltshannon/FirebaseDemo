@@ -35,6 +35,12 @@ struct ContentView: View {
                     Text("Demo FireStore")
                         .DefaultTextButtonStyle()
                 }
+                NavigationLink {
+                    UserView()
+                } label: {
+                    Text("Users")
+                        .DefaultTextButtonStyle()
+                }
                 if userAuth.isGuestUser {
                     Text("You are logged in under a Anonymous account")
                 } else {

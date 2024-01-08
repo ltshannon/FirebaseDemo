@@ -14,12 +14,12 @@ import FirebaseFirestoreSwift
 
 let database = Firestore.firestore()
 
-struct UserInformation: Codable, Identifiable {
+struct UserInformation: Codable, Identifiable, Hashable {
     @DocumentID var id: String?
     var name: String
     var email: String
     var fcm: String
-    var profileImage: String?
+    var profileImage: String
 }
 
 struct TestData: Codable, Identifiable {
@@ -73,6 +73,9 @@ class FirebaseService: ObservableObject {
             debugPrint(String.boom, "updateAddUsersDocument: \(error)")
             do {
                 try await database.collection("users").document(currentUid).setData(values)
+                DispatchQueue.main.async {
+                    self.getUsers()
+                }
             } catch {
                 debugPrint(String.boom, "uodateAddUsersDocument: \(error)")
             }
@@ -82,7 +85,7 @@ class FirebaseService: ObservableObject {
     
     func getUsers() {
         
-        let listener = database.collection("users").whereField("email", isNotEqualTo: "").addSnapshotListener { querySnapshot, error in
+        let listener = database.collection("users").addSnapshotListener { querySnapshot, error in
 
             guard let documents = querySnapshot?.documents else {
                 debugPrint(String.boom, "Users no documents")
@@ -92,8 +95,12 @@ class FirebaseService: ObservableObject {
             var items: [UserInformation] = []
             for document in documents {
                 do {
-                    let user = try document.data(as: UserInformation.self)
+                    var user = try document.data(as: UserInformation.self)
+                    if user.profileImage.isEmpty {
+                        user.profileImage = "https://firebasestorage.googleapis.com:443/v0/b/fir-demo-adeb5.appspot.com/o/E498006D-14AD-4F49-88B8-1D2A0E10E267.jpeg?alt=media&token=64d3e463-c86e-4f39-9df6-2ce99cee37d7"
+                    }
                     items.append(user)
+                    debugPrint("🦁", "profile url: \(user.profileImage)")
                 }
                 catch {
                     debugPrint("🧨", "\(error.localizedDescription)")
